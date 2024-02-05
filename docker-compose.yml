@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: kucukcelebi
+      MYSQL_DATABASE: BlogDB
+      MYSQL_USER: fatih
+      MYSQL_PASSWORD: kucukcelebi
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
