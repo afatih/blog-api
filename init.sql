@@ -1,8 +1,35 @@
-CREATE TABLE Blog
+create table BlogDB.User
 (
-    BlogId INT AUTO_INCREMENT PRIMARY KEY,
-    Title  NVARCHAR(255) NOT NULL
+    UserId      int auto_increment
+        primary key,
+    FirstName   varchar(255) charset utf8mb3 not null,
+    LastName    varchar(255) charset utf8mb3 not null,
+    Email       varchar(255) charset utf8mb3 null,
+    PhoneNumber varchar(255) charset utf8mb3 null
 );
 
-INSERT INTO Blog (Title) VALUES ('Sample Blog 1');
-INSERT INTO Blog (Title) VALUES ('Sample Blog 2');
+
+create table BlogDB.Blog
+(
+    BlogId      int auto_increment
+        primary key,
+    Title       varchar(255) charset utf8mb3  not null,
+    Description varchar(5000) charset utf8mb3 not null,
+    CreateDate  timestamp                     not null,
+    UpdateDate  timestamp                     null,
+    UserId      int                           not null,
+    constraint Blog_User_UserId_fk
+        foreign key (UserId) references BlogDB.User (UserId)
+);
+
+
+insert into User (FirstName, LastName, Email, PhoneNumber)
+values
+    ('Semanur','Çelebi','semanure38@gmail.com','0600000000'),
+    ('Fatih','Küçük','ahmet.fatih.kucuk@gmail.com','0600000000');
+
+insert into Blog (Title, Description, CreateDate, UpdateDate, UserId) 
+values
+    ('Title1','Desc1',CURDATE(),null,1),
+    ('Title2','Desc2',CURDATE(),null,1),
+    ('Title3','Desc3',CURDATE(),null,2);

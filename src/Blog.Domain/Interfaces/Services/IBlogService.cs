@@ -1,8 +1,11 @@
+using Blog.Domain.Models;
+
 namespace Blog.Domain.Interfaces.Services;
 
-using Blog.Domain.Entities;
+using Entities;
 
 public interface IBlogService
 {
     Task<IEnumerable<Blog>> GetAll();
+    Task<bool> Create(CreateBlogRequest blog);
 }

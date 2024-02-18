@@ -1,5 +1,7 @@
 using Blog.Domain.Interfaces.Repositories;
 using Blog.Domain.Interfaces.Services;
+using Blog.Domain.Models;
+using Mapster;
 
 namespace Blog.Application.Services.Implementations;
 
@@ -17,5 +19,11 @@ public class BlogService : IBlogService
         var blogs = _blogRepository.GetAll();
 
         return await blogs;
+    }
+
+    public async Task<bool> Create(CreateBlogRequest blog)
+    {
+        var result = _blogRepository.Create(blog.Adapt<Domain.Entities.Blog>());
+        return await result;
     }
 }

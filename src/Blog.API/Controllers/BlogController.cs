@@ -1,4 +1,5 @@
 using Blog.Domain.Interfaces.Services;
+using Blog.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers;
@@ -19,5 +20,12 @@ public class BlogController : ControllerBase
     {
         var blogs = await _blogService.GetAll();
         return Ok(blogs);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateBlogRequest request)
+    {
+        var blog = await _blogService.Create(request); 
+        return Created( string.Empty, blog);
     }
 }
