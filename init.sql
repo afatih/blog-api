@@ -30,6 +30,6 @@ values
 
 insert into Blog (Title, Description, CreateDate, UpdateDate, UserId) 
 values
-    ('Title1','Desc1',CURDATE(),null,1),
-    ('Title2','Desc2',CURDATE(),null,1),
-    ('Title3','Desc3',CURDATE(),null,2);
+    ('Title1','Desc1',NOW(),null,1),
+    ('Title2','Desc2',NOW(),null,1),
+    ('Title3','Desc3',NOW(),null,2);
