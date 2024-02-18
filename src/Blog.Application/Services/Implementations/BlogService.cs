@@ -5,25 +5,30 @@ using Mapster;
 
 namespace Blog.Application.Services.Implementations;
 
-public class BlogService : IBlogService
+public class BlogService(IBlogRepository blogRepository) : IBlogService
 {
-    private readonly IBlogRepository _blogRepository;
-
-    public BlogService(IBlogRepository blogRepository)
+    public async Task<IEnumerable<Domain.Entities.Blog>> Get(int? blogId)
     {
-        _blogRepository = blogRepository;
-    }
-    
-    public async Task<IEnumerable<Domain.Entities.Blog>> GetAll()
-    {
-        var blogs = _blogRepository.GetAll();
+        var blogs = blogRepository.Get(blogId);
 
         return await blogs;
     }
 
     public async Task<bool> Create(CreateBlogRequest blog)
     {
-        var result = _blogRepository.Create(blog.Adapt<Domain.Entities.Blog>());
+        var result = blogRepository.Create(blog.Adapt<Domain.Entities.Blog>());
+        return await result;
+    }
+
+    public async Task<bool> Delete(int blogId)
+    {
+        var result = blogRepository.Delete(blogId);
+        return await result;
+    }
+
+    public async Task<Domain.Entities.Blog> Update(UpdateBlogRequest blog)
+    {
+        var result = blogRepository.Update(blog.Adapt<Domain.Entities.Blog>());
         return await result;
     }
 }
