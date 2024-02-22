@@ -1,4 +1,5 @@
 using Blog.Domain.Interfaces.Repositories;
+using Blog.Domain.Models.Dto;
 using Dapper;
 
 namespace Blog.Infrastructure.Repositories;
@@ -7,14 +8,29 @@ using Domain.Entities;
 
 public class BlogRepository(DataContext context) : IBlogRepository
 {
-    public async Task<IEnumerable<Blog>> Get(int? blogId)
+    public async Task<IEnumerable<BlogDto>> GetAll(string title)
     {
         using var connection = context.CreateConnection();
-        var blogIdFilter = blogId is not null ? $"where blogId ={blogId}" : string.Empty;
+        var titleFilter = !string.IsNullOrEmpty(title) ? $"where Title like '%{title}%'" : string.Empty;
         var sql = $"""
-                  SELECT * FROM Blog {blogIdFilter} order by BlogId desc
+                  SELECT * FROM Blog b 
+                  inner join User u on b.UserId = u.UserId 
+                  {titleFilter} 
+                  order by BlogId desc
                   """;
-        return await connection.QueryAsync<Blog>(sql);
+        return await connection.QueryAsync<BlogDto>(sql);
+    }
+    
+    public async Task<BlogDto> GetDetail(int blogId)
+    {
+        using var connection = context.CreateConnection();
+        var sql = $"""
+                   SELECT * FROM Blog b
+                   inner join User u on b.UserId = u.UserId
+                   where b.BlogId = {blogId} 
+                   order by BlogId desc
+                   """;
+        return await connection.QueryFirstOrDefaultAsync<BlogDto>(sql);
     }
 
     public async Task<bool> Create(Blog blog)
