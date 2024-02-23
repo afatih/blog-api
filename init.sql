@@ -24,7 +24,7 @@ ALTER TABLE BlogDB.User CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode
 insert into User (FirstName, LastName, Email, PhoneNumber)
 values
     ('Semanur','Çelebi','semanure38@gmail.com','0600000000'),
-    ('Fatih','Küçük','ahmet.fatih.kucuk@gmail.com','0600000000'),
+    ('Fatih','Küçük','ahmet.fatih.kucuk@gmail.com','0600000000');
 
 insert into Blog (Title, Description, CreateDate, UpdateDate, UserId) 
 values
